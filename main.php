@@ -1,7 +1,7 @@
 <?php 
 	include('connect.php');
 
-  	$selectPosts = "SELECT CharacterID,Name,HP,Mana,DateAdded AS timeStamp FROM `character` ORDER BY CharacterID DESC LIMIT 5";
+  	$selectPosts = "SELECT CharacterID,Class,Name,HP,Mana,Attack,Defense,DateAdded AS timeStamp FROM `character` ORDER BY CharacterID DESC";
   	$result = $db->query($selectPosts);
 
  ?>
@@ -14,16 +14,17 @@
  <body>
  <div id="wrapper">
         <div id="header">
-            <h1><a href="index.php">BattleBudz</a></h1>
+            <h1><a href="main.php">BattleBudz</a></h1>
         </div> 
 <ul id="menu">
-    <li><a href="index.php" class='active'>Home</a></li>
+    <li><a href="index.php" class='active'>Logout</a></li>
     <li><a href="create.php" >New Post</a></li>
 </ul> 
 <div id="content">
   <?php foreach($result as $key):?>
       <div class="blog_post">
       <h2><a href="show.php?id=<?=$key['CharacterID']?>"><?=$key['Name']?></a></h2>
+      <h3><?=$key['Class']?></h3>
       <p>
         <small>
           <?=$key['timeStamp']?> -
@@ -33,7 +34,8 @@
       <div class='character_content'>
         <p>HP: <?=$key['HP']?>/30<p>
         <p>Mana: <?=$key['Mana']?>/30<p>
-        <p>HP: <?=$key['HP']?>/30<p>
+        <p>Attack: <?=$key['Attack']?>/30<p>
+		<p>Defense: <?=$key['Defense']?>/30<p>
           <a href="show.php?id=<?=$key['CharacterID']?>">Read more</a>
       </div>
     </div>

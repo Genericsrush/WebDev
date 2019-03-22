@@ -16,11 +16,11 @@ if (isset($_POST['username']) and isset($_POST['password'])){
 
 	if ($count == 1){
 
-		echo "<script type='text/javascript'>alert('Login Credentials verified')</script>";
+		//echo "<script type='text/javascript'>alert('Login Credentials verified')</script>";
 		header("Location: main.php");
 
 	} else {
-		echo "<script type='text/javascript'>alert('Invalid Login Credentials')</script>";
+		//echo "<script type='text/javascript'>alert('Invalid Login Credentials')</script>";
 		
 		header( "Location: index.php" );
 	}
