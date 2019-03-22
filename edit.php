@@ -54,7 +54,7 @@
         <input name="Defense" id="Defense" value="<?=$row['Defense']?>"/>/30
       </p>
       <p>
-        <input type="hidden" name="id" value="<?=$row['id']?>" />
+        <input type="hidden" name="id" value="<?=$row['CharacterID']?>" />
       <?php endforeach?>
         <input type="submit" name="command" value="Update" />
         <input type="submit" name="command" value="Delete" onclick="return confirm('Are you sure you wish to delete this post?')" />
@@ -62,9 +62,6 @@
     </fieldset>
   </form>
 </div>
-        <div id="footer">
-            Copywrong 2019 - No Rights Reserved
-        </div> 
     </div>
 </body>
 </html>

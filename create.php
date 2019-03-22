@@ -23,7 +23,7 @@
     <fieldset>
       <legend>Create Character</legend>
       <p>
-        <label for="Name">Title</label>
+        <label for="Name">Name</label>
         <input name="Name" id="Name"/>
       </p>
       <p>
@@ -47,7 +47,7 @@
         <input name="Defense" id="Defense"/>/30
       </p>
       <p>
-        <input type="submit" name="command" value="Create" />
+        <input type="submit" name="command" value="Insert" />
       </p>
     </fieldset>
   </form>
