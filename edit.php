@@ -27,7 +27,7 @@
 <div id="all_blogs">
   <form action="process_post.php" method="POST">
     <fieldset>
-      <legend>Edit Blog Post</legend>
+      <legend>Edit Charater</legend>
       <?php foreach($result as $row):?>
       <p>
         <label for="Name">Title</label>
@@ -64,7 +64,7 @@
 </div>
         <div id="footer">
             Copywrong 2019 - No Rights Reserved
-        </div> <!-- END div id="footer" -->
-    </div> <!-- END div id="wrapper" -->
+        </div> 
+    </div>
 </body>
 </html>
