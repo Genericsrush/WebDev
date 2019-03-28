@@ -1,10 +1,11 @@
 <?php  
  require('connect.php');
 
+ session_start();
+
 if (isset($_POST['username']) and isset($_POST['password'])){
 	
-	// Assigning POST values to variables.
-	$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);;
+	$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
 	$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -17,6 +18,7 @@ if (isset($_POST['username']) and isset($_POST['password'])){
 	if ($count == 1){
 
 		//echo "<script type='text/javascript'>alert('Login Credentials verified')</script>";
+		$_SESSION['username'] = $username;
 		header("Location: main.php");
 
 	} else {

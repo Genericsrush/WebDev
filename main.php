@@ -1,6 +1,7 @@
 <?php 
 	include('connect.php');
-
+  require('loggedin.php');
+  
   	$selectPosts = "SELECT CharacterID,Class,Name,HP,Mana,Attack,Defense,DateAdded AS timeStamp FROM `character` ORDER BY CharacterID DESC";
   	$result = $db->query($selectPosts);
 
@@ -17,7 +18,7 @@
             <h1><a href="main.php">BattleBudz</a></h1>
         </div> 
 <ul id="menu">
-    <li><a href="index.php" class='active'>Logout</a></li>
+    <li><a href="logout.php" class='active'>Logout</a></li>
     <li><a href="create.php" >New Post</a></li>
 </ul> 
 <div id="content">

@@ -21,7 +21,7 @@
             <h1><a href="main.php">BattleBudz</a></h1>
         </div> 
           <ul id="menu">
-              <li><a href="index.php" >Logout</a></li>
+              <li><a href="logout.php" >Logout</a></li>
               <li><a href="create.php" >New Post</a></li>
           </ul>
           <div id="all_blogs">
