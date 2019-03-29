@@ -60,7 +60,7 @@
 
 	if(isset($_POST['id']))
 	{
-		$id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+		$id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 	}
 
 	if($_POST['Name'] === "" || $_POST['Class'] === "")
