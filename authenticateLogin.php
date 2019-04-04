@@ -24,7 +24,7 @@ if (isset($_POST['username']) and isset($_POST['password'])){
 	} else {
 		//echo "<script type='text/javascript'>alert('Invalid Login Credentials')</script>";
 		
-		header( "Location: index.php" );
+		header( "Location: index.php?loginFailed=true" );
 	}
 }
 ?>

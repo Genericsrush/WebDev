@@ -3,6 +3,7 @@
   require('loggedin.php');
 
   $orderBy = '';
+  $firstTime = '';
 
   if(isset($_GET['type'])){
     $orderBy = filter_input(INPUT_GET, 'type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -14,12 +15,20 @@
   }
   $result = $db->query($selectPosts);
 
+  if(isset($_GET['userCreated'])){
+    $userCreated = filter_input(INPUT_GET, 'userCreated', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  }
  ?>
 
  <!DOCTYPE html>
  <html>
  <head>
  	<title>BattleBudz</title>
+  <?php if(isset($userCreated)):?>
+    <?php if ($userCreated):?>
+      <script type='text/javascript'>alert('New User created: Welcome!')</script>
+    <?php endif?>
+  <?php endif?>
  </head>
  <body>
  <div id="wrapper">
