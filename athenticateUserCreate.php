@@ -20,6 +20,8 @@ if (isset($_POST['username'])){
 
 		if(isset($_POST['password'])){
 			$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+			$password = md5($password);
 		}
 		else{
 			header("Location: index.php");
@@ -32,6 +34,7 @@ if (isset($_POST['username'])){
 		$statement->execute();
 
 		$_SESSION['username'] = $username;
+		$_SESSION['priv'] = 1;
 		header("Location: main.php?userCreated=true");
 	}
 }

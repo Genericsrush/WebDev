@@ -7,7 +7,7 @@ if (isset($_POST['username']) and isset($_POST['password'])){
 	
 	$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-	$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+	$password = md5(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
 	$query = "SELECT * FROM users WHERE Name ='$username' AND Password ='$password'";
 	 
@@ -19,6 +19,9 @@ if (isset($_POST['username']) and isset($_POST['password'])){
 
 		//echo "<script type='text/javascript'>alert('Login Credentials verified')</script>";
 		$_SESSION['username'] = $username;
+		foreach($result as $key){
+			$_SESSION['priv'] = $key['privilege'];
+		}
 		header("Location: main.php");
 
 	} else {
