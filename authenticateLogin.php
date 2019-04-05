@@ -9,7 +9,7 @@ if (isset($_POST['username']) and isset($_POST['password'])){
 
 	$password = md5(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-	$query = "SELECT * FROM users WHERE Name ='$username' AND Password ='$password'";
+	$query = "SELECT Name,Password,Privilege FROM users WHERE Name ='$username' AND Password ='$password'";
 	 
 	$result = $db->query($query);
 
@@ -17,15 +17,13 @@ if (isset($_POST['username']) and isset($_POST['password'])){
 
 	if ($count == 1){
 
-		//echo "<script type='text/javascript'>alert('Login Credentials verified')</script>";
 		$_SESSION['username'] = $username;
 		foreach($result as $key){
-			$_SESSION['priv'] = $key['privilege'];
+			$_SESSION['priv'] = $key['Privilege'];
 		}
 		header("Location: main.php");
 
 	} else {
-		//echo "<script type='text/javascript'>alert('Invalid Login Credentials')</script>";
 		
 		header( "Location: index.php?loginFailed=true" );
 	}

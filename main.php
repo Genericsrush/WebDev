@@ -2,6 +2,12 @@
 	include('connect.php');
   require('loggedin.php');
 
+  $privilege = 2;
+
+  if (isset($_SESSION['priv'])) {
+    $privilege = $_SESSION['priv'];
+  }
+
   $orderBy = '';
   $firstTime = '';
 
@@ -32,15 +38,17 @@
  </head>
  <body>
  <div id="wrapper">
-        <div id="header">
+        <header>
             <h1><a href="main.php">BattleBudz</a></h1>
-        </div> 
-<ul id="menu">
-    <li><a href="logout.php" class='active'>Logout</a></li>
-    <li><a href="create.php" >New Post</a></li>
-</ul> 
+        </header> 
+<nav>
+    <a href="main.php">Home</a>
+    <a href="create.php" <?php if(!($privilege > 1)):?> style="display:none"<?php endif ?>>New Post</a>
+    <a href="logout.php" class='active' <?php if(!($privilege > 1)):?> style="display:none"<?php endif ?>>Logout</a>
+    <a href="userTable.php" <?php if($privilege != 5):?> style="display:none"<?php endif ?>>Users</a>
+<nav> 
 
-<div id="content">
+<content>
   <h3>Order By:</h3>
   <h4><a href="main.php?type=Name">Name</a></h4>
   <h4><a href="main.php?type=Class">Class</a></h4>
@@ -52,7 +60,7 @@
       <p>
         <small>
           <?=$key['timeStamp']?> -
-          <a href="edit.php?id=<?=$key['CharacterID']?>">edit</a>
+          <a href="edit.php?id=<?=$key['CharacterID']?>" <?php if(!($privilege > 1)):?> style="display:none"<?php endif ?>>edit</a>
         </small>
       </p>
       <div class='character_content'>
@@ -64,7 +72,10 @@
       </div>
     </div>
   <?php endforeach?>
-        </div>
+        </content>
     </div> 
+    <footer>
+
+    </footer>
  </body>
  </html>

@@ -27,7 +27,7 @@ if (isset($_POST['username'])){
 			header("Location: index.php");
 		}
 		
-		$query = "INSERT INTO users (Name,Password,Privilege) VALUES (:username,:password,1)";
+		$query = "INSERT INTO users (Name,Password,Privilege) VALUES (:username,:password,2)";
 		$statement = $db->prepare($query);
 		$statement->bindValue(':username', $username);
 		$statement->bindValue(':password', $password);
