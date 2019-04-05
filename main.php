@@ -10,14 +10,23 @@
 
   $orderBy = '';
   $firstTime = '';
+  $dropDown = '';
+
+  if(isset($_POST['Class'])){
+    foreach ($_POST['Class'] as $select){
+      if ($select != '') {
+        $dropDown = 'WHERE Class ='."'".$select."'";
+      }
+    }
+  }
 
   if(isset($_GET['type'])){
     $orderBy = filter_input(INPUT_GET, 'type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $selectPosts = "SELECT CharacterID,Class,Name,HP,Mana,Attack,Defense,DateAdded AS timeStamp FROM `character` ORDER BY ".$orderBy."";
+    $selectPosts = "SELECT CharacterID,Class,Name,HP,Mana,Attack,Defense,DateAdded AS timeStamp FROM `character` ".$dropDown." ORDER BY ".$orderBy."";
   }
   else{
     $orderBy = 'CharacterID';
-    $selectPosts = "SELECT CharacterID,Class,Name,HP,Mana,Attack,Defense,DateAdded AS timeStamp FROM `character` ORDER BY ".$orderBy." DESC";
+    $selectPosts = "SELECT CharacterID,Class,Name,HP,Mana,Attack,Defense,DateAdded AS timeStamp FROM `character` ".$dropDown." ORDER BY ".$orderBy." DESC";
   }
   $result = $db->query($selectPosts);
 
@@ -53,6 +62,16 @@
   <h4><a href="main.php?type=Name">Name</a></h4>
   <h4><a href="main.php?type=Class">Class</a></h4>
   <h4><a href="main.php?type=DateAdded DESC">Date Added</a></h4>
+  <h3>Order By: Class</h3>
+  <form action="#" method="POST">
+    <select name="Class[]">
+      <option value="">All</option>
+      <option value="Archer">Archer</option>
+      <option value="Thief">Thief</option>
+      <option value="Mage">Mage</option>
+    </select>
+    <input type="submit" name="submit" value="Get Selected Value"/>
+  </form>
   <?php foreach($result as $key):?>
       <div class="blog_post">
       <h2><a href="show.php?id=<?=$key['CharacterID']?>"><?=$key['Name']?></a></h2>
