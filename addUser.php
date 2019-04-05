@@ -33,26 +33,17 @@
     <a href="userTable.php" <?php if($privilege != 5):?> style="display:none"<?php endif ?>>Users</a>
 </nav>
 <div id="all_blogs">
-  <form action="process_post.php" method="POST">
+  <form action="process_user.php" method="POST">
     <fieldset>
       <legend>Create Character</legend>
         <label for="Name">Name</label>
         <input name="Name" id="Name"/>
 
-        <label for="Class">Class</label>
-        <input name="Class" id="Class"/>
+        <label for="Password">Password</label>
+        <input name="Password" id="Password"/>
 
-        <label for="HP">HP</label>
-        <input name="HP" id="HP"/><p>/30</p>
-
-        <label for="Mana">Mana</label>
-        <input name="Mana" id="Mana"/><p>/30</p>
-
-        <label for="Attack">Attack</label>
-        <input name="Attack" id="Attack"/><p>/30</p>
-
-        <label for="Defense">Defense</label>
-        <input name="Defense" id="Defense"/><p>/30</p>
+        <label for="Privilege">Privilege</label>
+        <input name="Privilege" id="Privilege"/>
 
         <input type="submit" name="command" value="Insert" />
     </fieldset>

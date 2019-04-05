@@ -31,6 +31,8 @@
     	<label for="username">Password</label>
         <input type="password" name="password" placeholder="Password" id="password" required>
 
+        <p id="notMatching" style="display:none">* Passwords do not match</p>
+
         <label for="username">Confirm Password</label>
         <input type="password" placeholder="Confirm Password" id="confirm_password" required>
 
@@ -40,6 +42,7 @@
     <script type="text/javascript">
 		var password = document.getElementById("password");
 		var confirm_password = document.getElementById("confirm_password");
+		var noMatch = document.getElementById('notMatching');
 
 		document.getElementById("submit").addEventListener("click", function(event){
 		  validatePassword();
@@ -47,10 +50,10 @@
 
 		function validatePassword(){
 		  if(password.value != confirm_password.value) {
-		    confirm_password.setCustomValidity("Passwords Don't Match");
+		    noMatch.style.display = 'block';
 		    event.preventDefault()
 		  } else {
-		    confirm_password.setCustomValidity("");
+		    noMatch.style.display = 'none';
 		  }
 		}
 
