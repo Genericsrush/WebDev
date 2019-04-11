@@ -13,6 +13,11 @@
   WHERE CharacterID = ".$id." ORDER BY CharacterID DESC LIMIT 1";
   $result = $db->query($selectPost);
   
+  $selectReviews = "SELECT ReviewID, Name,Content 
+  FROM reviews R JOIN users u ON (R.UserID = U.UserID)
+  WHERE CharacterID = ".$id." ORDER BY ReviewID DESC LIMIT 5";
+  $result2 = $db->query($selectReviews);
+
 ?>
 
 <!DOCTYPE html>
@@ -35,12 +40,20 @@
           </nav>
           <div id="all_blogs">
                 <?php foreach($result as $row):?>
-                <h1><?=$row['Name']?></h1>
-                <h2>Class: <?=$row['Class']?></h2>
+                <h2><?=$row['Name']?></h2>
+                <h3>Class: <?=$row['Class']?></h3>
                 <p>HP: <?=$row['HP']?>/30</p>
                 <p>Mana: <?=$row['Mana']?>/30</p>
                 <p>Attack: <?=$row['Attack']?>/30</p>
                 <p>Defense: <?=$row['Defense']?>/30</p>
+              <?php endforeach?>
+          </div>
+
+          <div id="comments">
+            <h2>Comment Section</h2>
+              <?php foreach($result2 as $row):?>
+                <h4><?=$row['Name']?></h4>
+                <p><?=$row['Content']?></p>
               <?php endforeach?>
           </div>
     </div>

@@ -39,7 +39,7 @@
   <?php foreach($result as $row):?>
   <form action="process_user.php" method="POST">
     <fieldset>
-      <legend>Edit Charater</legend>
+      <legend>Modify Users</legend>
         <label for="UserID">UserID</label>
         <input name="UserID" id="UserID" value="<?=$row['UserID']?>" readonly/>
 
