@@ -85,14 +85,16 @@
           </div>
 
           <?php if ($privilege >= 2):?>
-            <form action="processComment.php?id=<?php echo $id?>" method="POST" id="form">
+            <form action="process_comment.php" method="POST" id="form" enctype="multipart/form-data">
               <fieldset>
+                <input type="hidden" name="CharacterID" value="<?php echo $id?>">
                 <label for="comment">Comment</label>
-                <input id="comment" type="textarea" name="comment" />
+                <input id="comment" type="textarea" name="Content" />
                 <!-- <img src="generate.php" width="120" height="30" border="1" alt="CAPTCHA"/></p>
                 <p><input type="text" size="6" maxlength="5" name="captcha" value="" id="captcha"><br>
                 <small>copy the digits from the image into this box</small></p> -->
-                <input type="submit" value="submit" id="submit"/>
+                <input type="file" name="image">
+                <input type="submit" name="command" value="insert" id="submit"/>
               </fieldset>
             </form>
           <?php endif?>
