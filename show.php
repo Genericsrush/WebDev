@@ -82,9 +82,9 @@
                 <input type="hidden" name="CharacterID" value="<?php echo $id?>">
                 <label for="comment">Comment</label>
                 <input id="comment" type="textarea" name="Content" />
-                <!-- <img src="generate.php" width="120" height="30" border="1" alt="CAPTCHA"/></p>
-                <p><input type="text" size="6" maxlength="5" name="captcha" value="" id="captcha"><br>
-                <small>copy the digits from the image into this box</small></p> -->
+                <img src="generate.php" width="120" height="30" border="1" alt="CAPTCHA"/></p>
+                <p><input type="text" size="6" maxlength="6" name="captcha" value="" id="captcha"><br>
+                <small>copy the digits from the image into this box</small></p>
                 <input type="file" name="image">
                 <input type="submit" name="command" value="insert" id="submit"/>
               </fieldset>
@@ -92,19 +92,5 @@
           <?php endif?>
 
     </div>
-    <!-- <script type="text/javascript">
-      var captcha = document.getElementById("captcha");
-
-      document.getElementById("submit").addEventListener("click", function(event){
-      checkForm()};
-
-      function checkForm(){
-        if(length(captcha) != 5) {
-        alert('Incorrect captcha length!');
-        captcha.focus();
-        event.preventDefault();
-        }
-      }
-    </script> -->
 </body>
 </html>
