@@ -8,6 +8,7 @@
 	if(isset($_POST['Content']) && $_POST['Content'] != "")
     {
 	    $Content = filter_input(INPUT_POST, 'Content', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
 	}
 	else
 	{
@@ -88,12 +89,12 @@
 
 	if($captcha != $_SESSION['code'])
 	{
-		echo $_SESSION['code'];
-		echo $captcha;
-		//header("Location: show.php?id=$CharacterID");
+		$_SESSION['Content'] = $Content;
+		header("Location: show.php?id=$CharacterID");
 	}	
 	else
 	{
+		$_SESSION['Content'] = '';
 		if(isset($_POST['command']))
 	    {
 		switch (strtoupper($command)) {

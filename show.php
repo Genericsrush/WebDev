@@ -81,7 +81,7 @@
               <fieldset>
                 <input type="hidden" name="CharacterID" value="<?php echo $id?>">
                 <label for="comment">Comment</label>
-                <input id="comment" type="textarea" name="Content" />
+                <input id="comment" type="textarea" name="Content" value="<?php  if(strlen($_SESSION['Content']) > 0):?><?php echo $_SESSION['Content']?><?php endif?>" />
                 <img src="generate.php" width="120" height="30" border="1" alt="CAPTCHA"/></p>
                 <p><input type="text" size="6" maxlength="6" name="captcha" value="" id="captcha"><br>
                 <small>copy the digits from the image into this box</small></p>
