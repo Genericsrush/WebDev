@@ -41,8 +41,8 @@
     }
     
     function file_is_an_image($temporary_path, $new_path) {
-        $allowed_mime_types      = ['image/gif', 'image/jpeg', 'image/png','application/pdf'];
-        $allowed_file_extensions = ['gif', 'jpg', 'jpeg', 'png','pdf'];
+        $allowed_mime_types      = ['image/gif', 'image/jpeg', 'image/png'];
+        $allowed_file_extensions = ['gif', 'jpg', 'jpeg', 'png'];
         
         $actual_file_extension   = pathinfo($new_path, PATHINFO_EXTENSION);
         
@@ -63,6 +63,10 @@
         $new_image_path        = file_upload_path($image_filename);
         if (file_is_an_image($temporary_image_path, $new_image_path)) {
             move_uploaded_file($temporary_image_path, $new_image_path);
+        }
+        else{
+        	$_FILES['image']['name'] = null;
+        	$image = null;
         }
     }
 	}
@@ -122,6 +126,9 @@
 		   		 if(isset($_FILES['image']['name'])){
 		         $statement->bindValue(':image', $image);
 		   		 
+		   		 }
+		   		 else{
+		   		 	$statement->bindValue(':image', $image);
 		   		 }
 
 		   	if(isset($statement)){

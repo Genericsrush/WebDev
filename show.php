@@ -23,45 +23,11 @@
   WHERE CharacterID = ".$id." ORDER BY CharacterID DESC LIMIT 1";
   $result = $db->query($selectPost);
   
-  $selectReviews = "SELECT R.UserID AS UserID, ReviewID, Name, Content 
+  $selectReviews = "SELECT R.UserID AS UserID, ReviewID, Name, Content , images
   FROM reviews R JOIN users U ON (R.UserID = U.UserID)
   WHERE CharacterID = ".$id." ORDER BY ReviewID DESC LIMIT 5";
   $result2 = $db->query($selectReviews);
   $count = $result2->rowCount();
-
-  function file_upload_path($original_filename, $upload_subfolder_name = 'images') {
-       $current_folder = dirname(__FILE__);
-
-       $path_segments = [$current_folder, $upload_subfolder_name, basename($original_filename)];
-       
-       return join(DIRECTORY_SEPARATOR, $path_segments);
-    }
-    
-    function file_is_an_image($temporary_path, $new_path) {
-        $allowed_mime_types      = ['image/gif', 'image/jpeg', 'image/png','application/pdf'];
-        $allowed_file_extensions = ['gif', 'jpg', 'jpeg', 'png','pdf'];
-        
-        $actual_file_extension   = pathinfo($new_path, PATHINFO_EXTENSION);
-        
-        $actual_mime_type        = $_FILES['image']['type'];
-
-        $file_extension_is_valid = in_array($actual_file_extension, $allowed_file_extensions);
-        $mime_type_is_valid      = in_array($actual_mime_type, $allowed_mime_types);
-        
-        return $file_extension_is_valid && $mime_type_is_valid;
-    }
-    
-    $image_upload_detected = isset($_FILES['image']) && ($_FILES['image']['error'] === 0);
-    $upload_error_detected = isset($_FILES['image']) && ($_FILES['image']['error'] > 0);
-
-    if ($image_upload_detected) { 
-        $image_filename        = $_FILES['image']['name'];
-        $temporary_image_path  = $_FILES['image']['tmp_name'];
-        $new_image_path        = file_upload_path($image_filename);
-        if (file_is_an_image($temporary_image_path, $new_image_path)) {
-            move_uploaded_file($temporary_image_path, $new_image_path);
-        }
-    }
 
 ?>
 
@@ -103,7 +69,7 @@
                 <?php if($row['UserID'] = $UserID || $privilege >= 4):?>
                   <p><a href="editComment.php">edit</a></p>
                 <?php endif?>
-                <p><?=$row['Content']?></p>
+                <p><?=$row['Content']?><?php if (!is_null(($row['images']))):?><img height="100" width="100" src="images/<?php echo $row['images']?>"><?php endif ?></p>
               <?php endforeach?>
               <?php else :?>
                 <p>No comments are available for this page.</p>
