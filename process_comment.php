@@ -23,6 +23,12 @@
 	if(isset($_POST['captcha']))
 	{
 		$captcha = filter_input(INPUT_POST, 'captcha', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+		if($captcha != $_SESSION['code'])
+		{
+			$_SESSION['Content'] = $Content;
+			header("Location: show.php?id=$CharacterID");
+			die;
+		}
 	}
 
 	if(isset($_POST['CharacterID']))
@@ -34,63 +40,71 @@
 	{
 		$UserID = $_SESSION['UserID'];
 	}
-
-	if(strlen($_FILES['image']['name'])>0)
-	{
-		$image = $_FILES['image']['name'];
-	    function file_upload_path($original_filename, $upload_subfolder_name = 'images') {
-	       $current_folder = dirname(__FILE__);
-
-	       $path_segments = [$current_folder, $upload_subfolder_name, basename($original_filename)];
-	       
-	       return join(DIRECTORY_SEPARATOR, $path_segments);
-	    }
-	    
-	    function file_is_an_image($temporary_path, $new_path) {
-	        $allowed_mime_types      = ['image/gif', 'image/jpeg', 'image/png'];
-	        $allowed_file_extensions = ['gif', 'jpg', 'jpeg', 'png'];
-	        
-	        $actual_file_extension   = pathinfo($new_path, PATHINFO_EXTENSION);
-	        
-	        $actual_mime_type        = $_FILES['image']['type'];
-
-	        $file_extension_is_valid = in_array($actual_file_extension, $allowed_file_extensions);
-	        $mime_type_is_valid      = in_array($actual_mime_type, $allowed_mime_types);
-	        
-	        return $file_extension_is_valid && $mime_type_is_valid;
-	    }
-	    
-	    $image_upload_detected = isset($_FILES['image']) && ($_FILES['image']['error'] === 0);
-	    $upload_error_detected = isset($_FILES['image']) && ($_FILES['image']['error'] > 0);
-
-	    if ($image_upload_detected) { 
-	        $image_filename        = $_FILES['image']['name'];
-	        $temporary_image_path  = $_FILES['image']['tmp_name'];
-	        $new_image_path        = file_upload_path($image_filename);
-	        if (file_is_an_image($temporary_image_path, $new_image_path)) {
-	            move_uploaded_file($temporary_image_path, $new_image_path);
-	        }
-	        else{
-	        	$_FILES['image']['name'] = null;
-	        	$image = null;
-	        }
-	    }
-
-	}
-	else
-	{
-		$image = null;
-	}
-
 	if(isset($_POST['command']))
     {
 	    $command = filter_input(INPUT_POST, 'command', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 	}
 
-	if($captcha != $_SESSION['code'])
+	if(isset($_FILES['image']['name']))
 	{
-		$_SESSION['Content'] = $Content;
-		header("Location: show.php?id=$CharacterID");
+		if(strlen($_FILES['image']['name'])>0)
+		{
+			$image = $_FILES['image']['name'];
+		    function file_upload_path($original_filename, $upload_subfolder_name = 'images') {
+		       $current_folder = dirname(__FILE__);
+
+		       $path_segments = [$current_folder, $upload_subfolder_name, basename($original_filename)];
+		       
+		       return join(DIRECTORY_SEPARATOR, $path_segments);
+		    }
+		    
+		    function file_is_an_image($temporary_path, $new_path) {
+		        $allowed_mime_types      = ['image/gif', 'image/jpeg', 'image/png'];
+		        $allowed_file_extensions = ['gif', 'jpg', 'jpeg', 'png'];
+		        
+		        $actual_file_extension   = pathinfo($new_path, PATHINFO_EXTENSION);
+		        
+		        $actual_mime_type        = $_FILES['image']['type'];
+
+		        $file_extension_is_valid = in_array($actual_file_extension, $allowed_file_extensions);
+		        $mime_type_is_valid      = in_array($actual_mime_type, $allowed_mime_types);
+		        
+		        return $file_extension_is_valid && $mime_type_is_valid;
+		    }
+		    
+		    $image_upload_detected = isset($_FILES['image']) && ($_FILES['image']['error'] === 0);
+		    $upload_error_detected = isset($_FILES['image']) && ($_FILES['image']['error'] > 0);
+
+		    if ($image_upload_detected) { 
+		        $image_filename        = $_FILES['image']['name'];
+		        $temporary_image_path  = $_FILES['image']['tmp_name'];
+		        $new_image_path        = file_upload_path($image_filename);
+		        if (file_is_an_image($temporary_image_path, $new_image_path)) {
+		            move_uploaded_file($temporary_image_path, $new_image_path);
+		        }
+		        else{
+		        	$_FILES['image']['name'] = null;
+		        	$image = null;
+		        	echo 1;
+		        }
+		    }
+		}
+		else
+		{
+		    $image = null;
+		    echo 2;
+		}
+
+	}
+	else
+	{
+		$image = null;
+		echo 3;
+	}
+
+	if(!isset($_POST['command']))
+	{
+
 	}	
 	else
 	{
@@ -99,13 +113,13 @@
 	    {
 		switch (strtoupper($command)) {
 			case "INSERT":
-				$query = "".strtoupper($command)." INTO `reviews` (Content,UserID,CharacterID,images) VALUES (:Content,:UserID,:CharacterID,:image)";
+					$query = "".strtoupper($command)." INTO `reviews` (Content,UserID,CharacterID,images) VALUES (:Content,:UserID,:CharacterID,:image)";
 				break;
 			case "UPDATE":
-				$query = "".strtoupper($command)." reviews SET Content=:Content WHERE ReviewID = :ReviewID";
+				$query = "".strtoupper($command)." `reviews` SET Content=:Content, images=:image WHERE ReviewID = :ReviewID";
 				break;
 			case "DELETE":
-				$query = "".strtoupper($command)." FROM reviews WHERE ReviewID=:ReviewID";
+				$query = "".strtoupper($command)." FROM `reviews` WHERE ReviewID=:ReviewID";
 					$statement = $db->prepare($query);
 					$statement->bindValue(':ReviewID', $ReviewID);
 					$statement->execute();
@@ -115,35 +129,33 @@
 			default:
 		}
 		}
+
 		if(isset($query)){
 			$statement = $db->prepare($query);
 		}
 
-				if(isset($_SESSION['UserID'])){
-				$statement->bindValue(':UserID', $UserID);
-				}   
+				if(isset($_SESSION['UserID']) && strtoupper($command) === "INSERT"){
+				 $statement->bindValue(':UserID', $UserID);
+				} 
+
+				if(isset($_POST['ReviewID']) && strtoupper($command) === "UPDATE"){
+				$statement->bindValue(':ReviewID', $ReviewID);
+				}     
 
 				if(isset($_POST['Content'])){
 		        $statement->bindValue(':Content', $Content);
 		    	}
 
-		        if(isset($_POST['CharacterID'])){
-		        	$statement->bindValue(':CharacterID', $CharacterID);
-		   		 
+		        if(isset($_POST['CharacterID']) && strtoupper($command) === "INSERT"){
+		        	$statement->bindValue(':CharacterID', $CharacterID);		   		 
 		   		 }
 
-		   		 if(isset($_FILES['image']['name'])){
-		          $statement->bindValue(':image', $image);
-		   		 
-		   		 }
-		   		 else{
-		   		 	$statement->bindValue(':image', $image);
-		   		 }
+		   		 $statement->bindValue(':image', $image);
 
 		   	if(isset($statement)){
 		        $statement->execute();
 		    }
-		    header("Location: show.php?id=$CharacterID");
+		   //header("Location: show.php?id=$CharacterID");
 		
 	}
 ?>

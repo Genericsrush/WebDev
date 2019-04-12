@@ -67,7 +67,7 @@
               <?php foreach($result2 as $row):?>
                 <h4><?=$row['Name']?></h4>
                 <?php if($row['UserID'] = $UserID || $privilege >= 4):?>
-                  <p><a href="editComment.php">edit</a></p>
+                  <p><a href="editComment.php?id=<?php echo $row['ReviewID']?>">edit</a></p>
                 <?php endif?>
                 <p><?=$row['Content']?><?php if (!is_null(($row['images']))):?><img height="100" width="100" src="images/<?php echo $row['images']?>"><?php endif ?></p>
               <?php endforeach?>
@@ -85,7 +85,7 @@
                 <img src="generate.php" width="120" height="30" border="1" alt="CAPTCHA"/></p>
                 <p><input type="text" size="6" maxlength="6" name="captcha" value="" id="captcha"><br>
                 <small>copy the digits from the image into this box</small></p>
-                <input type="file" name="image">
+                <input type="file" name="image"/>
                 <input type="submit" name="command" value="insert" id="submit"/>
               </fieldset>
             </form>
