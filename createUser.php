@@ -51,7 +51,7 @@
 		function validatePassword(){
 		  if(password.value != confirm_password.value) {
 		    noMatch.style.display = 'block';
-		    event.preventDefault()
+		    event.preventDefault();
 		  } else {
 		    noMatch.style.display = 'none';
 		  }

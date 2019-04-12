@@ -9,7 +9,7 @@ if (isset($_POST['username']) and isset($_POST['password'])){
 
 	$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-	$query = "SELECT Name,Password,Privilege FROM users WHERE Name ='$username'";
+	$query = "SELECT UserID,Name,Password,Privilege FROM users WHERE Name ='$username'";
 	 
 	$result = $db->query($query);
 
@@ -21,7 +21,9 @@ if (isset($_POST['username']) and isset($_POST['password'])){
 			if (password_verify($password, $key['Password'])) {
 
 				$_SESSION['username'] = $username;
+
 				$_SESSION['priv'] = $key['Privilege'];
+				$_SESSION['UserID'] = $key['UserID'];
 				header("Location: main.php");
 			}
 			else {
